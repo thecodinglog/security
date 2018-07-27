@@ -13,3 +13,6 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     show-sql: true
+
+logging:
+  level.org.springframework.jdbc.core.JdbcTemplate: debug

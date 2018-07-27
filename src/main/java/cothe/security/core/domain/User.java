@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Users {
+public class User {
     @Id
     private String userId;
     private String password;
