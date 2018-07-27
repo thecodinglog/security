@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tm:TermDictionary xmlns:tm="http://exerd.com/term-model" version="1.1">
+  <term name="사용자ID" description="사용자ID" physicalName="USER_ID"/>
+  <term name="REMARK" description="REMARK" physicalName="REMARK" physicalDescription="REMARK"/>
+  <term name="등록일시" physicalName="CREATION_DT"/>
+  <term name="등록자" description="최초로 레코드를 생성한 유저 ID" physicalName="CREATION_USER_ID"/>
+  <term name="등록프로그램ID" physicalName="CREATION_PROGRAM_ID"/>
+  <term name="수정일시" physicalName="MODIFICATION_DT"/>
+  <term name="수정자" physicalName="MODIFICATION_USER_ID"/>
+  <term name="수정프로그램ID" physicalName="MODIFICATION_PROGRAM_ID"/>
+  <term name="계정ID" physicalName="ACCOUNT_ID"/>
+  <term name="계정명" physicalName="ACCOUNT_NAME"/>
+  <term name="SSO ID" physicalName="SSO_ID"/>
+  <term name="패스워드" physicalName="PASSWORD"/>
+  <term name="SALT" physicalName="SALT"/>
+  <term name="이전패스워드" physicalName="BEFORE_PASSWORD"/>
+  <term name="패스워드최종변경일" description="패스워드 최종 변경일자" physicalName="LAST_CHANGED_PASSWORD_DT" physicalDescription="패스워드 최종 변경일자"/>
+  <term name="만기일" description="계정 만기일" physicalName="EXPIRED_DT" physicalDescription="계정 만기일"/>
+  <term name="EMAIL주소" physicalName="EMAIL_ADDR"/>
+  <term name="회사코드" physicalName="COMPANY_CODE"/>
+  <term name="팀코드" physicalName="TEAM_CODE"/>
+  <term name="사원번호" physicalName="EMP_NO"/>
+  <term name="전화번호" physicalName="TEL_NO"/>
+  <term name="휴대폰번호" physicalName="MOBILE_NO"/>
+  <term name="내선번호" physicalName="EXTENTION_NO"/>
+  <term name="메뉴ID" physicalName="MENU_ID"/>
+  <term name="테마" physicalName="UI_THEME"/>
+  <term name="스크립트" physicalName="CUSTOM_SCRIPT"/>
+  <term name="비고" physicalName="REMARK"/>
+  <term name="ROLE ID" physicalName="ROLE_ID"/>
+  <term name="오브젝트 유형" description="오브젝트 유형 (UI, SERVICE, MARU, ...)" physicalName="OBJECT_TYPE" physicalDescription="오브젝트 유형 (UI, SERVICE, MARU, ...)"/>
+  <term name="ROLE NAME" physicalName="ROLE_NAME"/>
+  <term name="퍼미션 ID" physicalName="PERMISSION_ID"/>
+  <term name="오브젝트 ID" physicalName="OBJECT_ID"/>
+  <term name="퍼미션 명" physicalName="PERMISSION_NAME"/>
+  <term name="퍼미션 스크립트" physicalName="PERMISSION"/>
+  <term name="오브젝트 명" physicalName="OBJECT_NAME"/>
+  <term name="시스템 구분" physicalName="SYSTEM_CODE"/>
+  <term name="체인코드" physicalName="SUB_SYSTEM_CODE"/>
+  <term name="사용여부" physicalName="USE_YN"/>
+  <term name="오브젝트 참조" physicalName="OBJECT_REFERENCE"/>
+  <term name="그룹 ID" physicalName="GROUP_ID"/>
+  <term name="그룹 명" physicalName="GROUP_NAME"/>
+  <term name="순서" physicalName="SEQ"/>
+  <term name="위치" physicalName="PATH"/>
+  <term name="메뉴명" physicalName="MENU_NAME"/>
+  <term name="미디어 타입" physicalName="MEDIA_TYPE"/>
+  <term name="그룹명" physicalName="GROUP_NAME"/>
+  <term name="부모ROLE ID" physicalName="PARENT_ROLE_ID"/>
+  <term name="사용자명" physicalName="USER_NM"/>
+  <term name="즐겨찾기ID" description="즐겨찾기 ID" physicalName="FAV_ID"/>
+</tm:TermDictionary>
