@@ -22,4 +22,5 @@ public class User {
     private String userId;
     private String password;
     private boolean enabled;
+    //private List<GrantedAuthority> authorities;
 }
