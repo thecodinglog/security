@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Set;
 
 /**
  * @author Jeongjin Kim
@@ -22,5 +23,5 @@ public class User {
     private String userId;
     private String password;
     private boolean enabled;
-    //private List<GrantedAuthority> authorities;
+    private Set<Role> roles;
 }

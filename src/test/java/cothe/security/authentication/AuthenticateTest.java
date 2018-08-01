@@ -1,5 +1,6 @@
 package cothe.security.authentication;
 
+import cothe.security.core.domain.Role;
 import cothe.security.core.domain.User;
 import cothe.security.core.repositories.UserRepository;
 import cothe.security.core.userdetails.MockUserDetailsService;
@@ -39,7 +40,11 @@ public class AuthenticateTest {
 
         userRepository = new MockUserRepository();
         userRepository.save(
-                new User("cothe", "pass", true
+                new User("cothe", "pass", true,
+                        Stream.of(Role.builder()
+                                .roleId("admin")
+                                .roleName("관리자").parentRole(null)
+                                .build()).collect(Collectors.toSet())
                 ));
 
         userDetailsService = new MockUserDetailsService(userRepository);
@@ -50,6 +55,7 @@ public class AuthenticateTest {
         authenticationProviders = Stream.of(
                 authenticationProvider
         ).collect(Collectors.toList());
+
         providerManager = new ProviderManager(authenticationProviders);
     }
 
@@ -63,7 +69,7 @@ public class AuthenticateTest {
     }
 
     @Test(expected = BadCredentialsException.class)
-    public void 인증실패(){
+    public void 인증실패() {
         Authentication auth = new UsernamePasswordAuthenticationToken("cothe1", "pass");
 
         auth = providerManager.authenticate(auth);

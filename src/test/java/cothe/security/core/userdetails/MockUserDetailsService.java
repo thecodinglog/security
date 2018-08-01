@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -25,11 +26,14 @@ public class MockUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+
         Optional<UserDetails> userDetails = userRepository.findById(username).map(user ->
                 User.builder()
                         .username(user.getUserId())
                         .password(user.getPassword())
-                        .authorities(Arrays.asList(new SimpleGrantedAuthority("Test")))
+                        .authorities(user.getRoles().stream().
+                                map(role -> new SimpleGrantedAuthority(role.getRoleId())).collect(Collectors.toList()))
                         .build()
         );
 
