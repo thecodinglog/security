@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     JdbcTemplate jdbcTemplate;
 
     @Test
-    @Ignore
+
     public void JPA로_MySql_접근() {
         //given
         userRepository.save(User.builder()
@@ -44,7 +44,6 @@ public class UserRepositoryTest {
     }
 
     @Test
-    @Ignore
     public void JDBC로_MySql_접근() {
         //given
         int cnt = jdbcTemplate.queryForObject("select count(*) from user where user_id = ?"

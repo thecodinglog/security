@@ -43,7 +43,7 @@ public class AuthenticateTest {
                 new User("cothe", "pass", true,
                         Stream.of(Role.builder()
                                 .roleId("admin")
-                                .roleName("관리자").parentRole(null)
+                                //.roleName("관리자").parentRole(null)
                                 .build()).collect(Collectors.toSet())
                 ));
 

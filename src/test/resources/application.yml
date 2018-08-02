@@ -15,7 +15,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
-
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 logging:
   level.org.springframework.jdbc.core.JdbcTemplate: debug

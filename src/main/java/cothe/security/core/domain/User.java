@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 /**
@@ -23,5 +24,7 @@ public class User {
     private String userId;
     private String password;
     private boolean enabled;
+
+    @OneToMany
     private Set<Role> roles;
 }
