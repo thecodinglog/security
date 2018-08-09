@@ -6,26 +6,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * @author Jeongjin Kim
- * @since 2018. 8. 1.
+ * @since 2018. 8. 6.
  */
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Permission {
     @Id
-    private String roleId;
-    private String roleName;
+    private String permissionId;
+    private String permissionName;
+    private String permission;
+    @ManyToOne
+    @JoinColumn(name = "secured_object_id")
+    private SecuredObject securedObject;
 
-    @ManyToOne()
-    @JoinColumn(name = "parent_role_id")
-    private Role parentRole;
-
-    @OneToMany
-    private Set<Permission> permissions;
 }
