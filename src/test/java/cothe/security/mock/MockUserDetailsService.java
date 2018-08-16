@@ -1,4 +1,4 @@
-package cothe.security.core.userdetails;
+package cothe.security.mock;
 
 import cothe.security.core.repositories.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,11 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Jeongjin Kim

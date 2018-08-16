@@ -1,4 +1,4 @@
-package cothe.security.authentication;
+package cothe.security.mock;
 
 import cothe.security.core.domain.User;
 import cothe.security.core.repositories.UserRepository;

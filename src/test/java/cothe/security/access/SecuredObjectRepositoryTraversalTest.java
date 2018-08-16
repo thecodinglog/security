@@ -1,20 +1,9 @@
 package cothe.security.access;
 
-import cothe.security.authentication.MockUserRepository;
 import cothe.security.core.domain.*;
-import cothe.security.core.repositories.UserRepository;
-import cothe.security.core.userdetails.MockUserDetailsService;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

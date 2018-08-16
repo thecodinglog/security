@@ -22,7 +22,7 @@ public class Role {
     private String roleId;
     private String roleName;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "parent_role_id")
     private Role parentRole;
 
