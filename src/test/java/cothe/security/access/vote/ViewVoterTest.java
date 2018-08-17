@@ -54,4 +54,13 @@ public class ViewVoterTest {
         int voteResult = viewVoter.vote(authentication, targetView, null);
         assertTrue(voteResult < 0);
     }
+
+    @Test
+    public void permission이null이면(){
+        ViewVoter nullPermissionViewVoter = new ViewVoter(new MockRoleProvider(null));
+
+        String targetView = "default_object";
+        int voteResult = nullPermissionViewVoter.vote(authentication, targetView, null);
+        assertTrue(voteResult < 0);
+    }
 }

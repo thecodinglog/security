@@ -7,8 +7,10 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.util.Assert;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author Jeongjin Kim
@@ -22,7 +24,6 @@ public class ViewVoter implements AccessDecisionVoter<Object> {
         this.roleProvider = roleProvider;
     }
 
-
     @Override
     public boolean supports(ConfigAttribute attribute) {
         return true;
@@ -35,6 +36,8 @@ public class ViewVoter implements AccessDecisionVoter<Object> {
 
     @Override
     public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
+        Assert.notNull(this.roleProvider, "There is no role provider.");
+
         String targetView = (String) object;
 
         if (!authentication.isAuthenticated()) {
@@ -47,13 +50,14 @@ public class ViewVoter implements AccessDecisionVoter<Object> {
             if (role == null)
                 continue;
 
-            if (role.getPermissions().stream()
-                    .filter(permission -> permission.getSecuredObject().getSecuredObjectType()== SecuredObjectType.VIEW)
-                    .anyMatch(permission -> permission.getSecuredObject().getSecuredObjectId().equals(targetView))) {
+            if (Optional.ofNullable(role.getPermissions())
+                    .map(permissions -> permissions.stream()
+                            .filter(permission -> permission.getSecuredObject().getSecuredObjectType() == SecuredObjectType.VIEW)
+                            .anyMatch(permission -> permission.getSecuredObject().getSecuredObjectId().equals(targetView))
+                    ).orElse(false)) {
                 return ACCESS_GRANTED;
             }
         }
-
         return ACCESS_DENIED;
     }
 }
