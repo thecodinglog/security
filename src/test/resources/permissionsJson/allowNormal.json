@@ -1,0 +1,17 @@
+{
+  "allow": [
+    {
+      "category": "book,music",
+      "@or": [
+        {
+          "genre": "dance",
+          "since": 1998
+        },
+        {
+          "genre": "jazz",
+          "since": 1920
+        }
+      ]
+    }
+  ]
+}
