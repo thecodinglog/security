@@ -4,6 +4,7 @@ import cothe.security.core.domain.Permission;
 import cothe.security.core.domain.SecuredObject;
 import cothe.security.core.domain.SecuredObjectType;
 import cothe.security.mock.MockRoleProvider;
+import cothe.security.mock.MockViewNameExtractor;
 import cothe.security.mock.WithMockSecuredUser;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class AccessDecisionManagerTest {
                 new Permission("default_view_permission", "default_view_permission", null,
                         new SecuredObject("default_object", "default_object", SecuredObjectType.VIEW))
         ).collect(Collectors.toSet());
-        viewVoter = new ViewVoter(new MockRoleProvider(permissions));
+        viewVoter = new ViewVoter(new MockRoleProvider(permissions), new MockViewNameExtractor());
         authentication = SecurityContextHolder.getContext().getAuthentication();
         accessDecisionManager = new AffirmativeBased(
                 Arrays.asList(

@@ -1,5 +1,6 @@
 package cothe.security.access.vote;
 
+import cothe.security.access.ViewNameExtractor;
 import cothe.security.core.domain.Role;
 import cothe.security.core.domain.SecuredObjectType;
 import cothe.security.core.domain.providers.RoleProvider;
@@ -19,9 +20,11 @@ import java.util.Optional;
 public class ViewVoter implements AccessDecisionVoter<Object> {
 
     private RoleProvider roleProvider;
+    private ViewNameExtractor viewNameExtractor;
 
-    public ViewVoter(RoleProvider roleProvider) {
+    public ViewVoter(RoleProvider roleProvider, ViewNameExtractor viewNameExtractor) {
         this.roleProvider = roleProvider;
+        this.viewNameExtractor = viewNameExtractor;
     }
 
     @Override
@@ -37,8 +40,9 @@ public class ViewVoter implements AccessDecisionVoter<Object> {
     @Override
     public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
         Assert.notNull(this.roleProvider, "There is no role provider.");
+        Assert.notNull(this.viewNameExtractor, "There is no view name extractor.");
 
-        String targetView = (String) object;
+        String targetView = this.viewNameExtractor.extractViewName(object);
 
         if (!authentication.isAuthenticated()) {
             return ACCESS_DENIED;

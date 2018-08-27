@@ -4,6 +4,7 @@ import cothe.security.core.domain.Permission;
 import cothe.security.core.domain.SecuredObject;
 import cothe.security.core.domain.SecuredObjectType;
 import cothe.security.mock.MockRoleProvider;
+import cothe.security.mock.MockViewNameExtractor;
 import cothe.security.mock.WithMockSecuredUser;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class ViewVoterTest {
         ).collect(Collectors.toSet());
 
         authentication = SecurityContextHolder.getContext().getAuthentication();
-        viewVoter = new ViewVoter(new MockRoleProvider(permissions));
+        viewVoter = new ViewVoter(new MockRoleProvider(permissions), new MockViewNameExtractor());
     }
 
     @Test
@@ -57,7 +58,7 @@ public class ViewVoterTest {
 
     @Test
     public void permission이null이면(){
-        ViewVoter nullPermissionViewVoter = new ViewVoter(new MockRoleProvider(null));
+        ViewVoter nullPermissionViewVoter = new ViewVoter(new MockRoleProvider(null), new MockViewNameExtractor());
 
         String targetView = "default_object";
         int voteResult = nullPermissionViewVoter.vote(authentication, targetView, null);
