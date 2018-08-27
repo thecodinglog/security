@@ -1,6 +1,7 @@
 package cothe.security.access.vote;
 
-import cothe.security.access.ViewNameExtractor;
+import cothe.security.access.RequestedViewMeta;
+import cothe.security.access.RequestedViewMetaExtractor;
 import cothe.security.core.domain.Role;
 import cothe.security.core.domain.SecuredObjectType;
 import cothe.security.core.domain.providers.RoleProvider;
@@ -20,11 +21,11 @@ import java.util.Optional;
 public class ViewVoter implements AccessDecisionVoter<Object> {
 
     private RoleProvider roleProvider;
-    private ViewNameExtractor viewNameExtractor;
+    private RequestedViewMetaExtractor requestedViewMetaExtractor;
 
-    public ViewVoter(RoleProvider roleProvider, ViewNameExtractor viewNameExtractor) {
+    public ViewVoter(RoleProvider roleProvider, RequestedViewMetaExtractor requestedViewMetaExtractor) {
         this.roleProvider = roleProvider;
-        this.viewNameExtractor = viewNameExtractor;
+        this.requestedViewMetaExtractor = requestedViewMetaExtractor;
     }
 
     @Override
@@ -40,12 +41,16 @@ public class ViewVoter implements AccessDecisionVoter<Object> {
     @Override
     public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
         Assert.notNull(this.roleProvider, "There is no role provider.");
-        Assert.notNull(this.viewNameExtractor, "There is no view name extractor.");
-
-        String targetView = this.viewNameExtractor.extractViewName(object);
+        Assert.notNull(this.requestedViewMetaExtractor, "There is no RequestedViewExtractor.");
 
         if (!authentication.isAuthenticated()) {
             return ACCESS_DENIED;
+        }
+
+        String targetView = Optional.ofNullable(this.requestedViewMetaExtractor.extractViewMeta(object))
+                .map(RequestedViewMeta::getViewName).orElse(null);
+        if (targetView == null) {
+            return ACCESS_ABSTAIN;
         }
 
         for (GrantedAuthority authority : authentication.getAuthorities()) {

@@ -1,9 +1,8 @@
 package learning;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import cothe.security.access.ServicePermissionDescription;
 import org.junit.Test;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.*;
 import java.util.Map;
@@ -14,11 +13,26 @@ import java.util.Map;
  */
 public class JsonObjectTest {
 
+
     @Test
     public void jsonToMap(){
         Gson gson = new Gson();
         try(Reader fr = new InputStreamReader(getClass().getResourceAsStream("/permissionsJson/allowNormal.json"))){
             Map<String, Object> data = gson.fromJson(fr, Map.class);
+            System.out.println(data);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void jsonToService(){
+        Gson gson = new Gson();
+        try(Reader fr = new InputStreamReader(getClass().getResourceAsStream("/permissionsJson/allowNormal.json"))){
+            ServicePermissionDescription data = gson.fromJson(fr, ServicePermissionDescription.class);
             System.out.println(data);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

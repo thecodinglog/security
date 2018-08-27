@@ -1,15 +1,24 @@
 {
-  "allow": [
+  "strategy": "allow",
+  "conditions": [
     {
-      "category": "book,music",
-      "@or": [
+      "operation": "search",
+      "params": [
         {
           "genre": "dance",
-          "since": 1998
+          "since": "1998"
         },
         {
           "genre": "jazz",
-          "since": 1920
+          "since": "1920"
+        }
+      ]
+    },
+    {
+      "operation": "order",
+      "params": [
+        {
+          "genre": "dance"
         }
       ]
     }
