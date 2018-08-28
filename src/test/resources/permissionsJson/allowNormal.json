@@ -1,8 +1,8 @@
 {
   "strategy": "allow",
-  "conditions": [
+  "permissions": [
     {
-      "operation": "search",
+      "operations": "search",
       "params": [
         {
           "genre": "dance",
@@ -15,7 +15,7 @@
       ]
     },
     {
-      "operation": "order",
+      "operations": "order",
       "params": [
         {
           "genre": "dance"
