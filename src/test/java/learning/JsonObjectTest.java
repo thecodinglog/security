@@ -1,7 +1,7 @@
 package learning;
 
 import com.google.gson.Gson;
-import cothe.security.access.ServicePermissionDescription;
+import cothe.security.access.ServicePermission;
 import org.junit.Test;
 
 import java.io.*;
@@ -32,7 +32,7 @@ public class JsonObjectTest {
     public void jsonToService(){
         Gson gson = new Gson();
         try(Reader fr = new InputStreamReader(getClass().getResourceAsStream("/permissionsJson/allowNormal.json"))){
-            ServicePermissionDescription data = gson.fromJson(fr, ServicePermissionDescription.class);
+            ServicePermission data = gson.fromJson(fr, ServicePermission.class);
             System.out.println(data);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
