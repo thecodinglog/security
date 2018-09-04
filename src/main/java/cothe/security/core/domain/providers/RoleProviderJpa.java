@@ -8,7 +8,7 @@ import cothe.security.core.repositories.RoleRepository;
  * @since 2018. 8. 14.
  */
 public class RoleProviderJpa implements RoleProvider {
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public RoleProviderJpa(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;

@@ -18,6 +18,9 @@ public class MockRoleProvider implements RoleProvider {
     private Role role;
     private Set<Permission> permissions;
 
+    /**
+     * 생성자로 받은 Permission 를 요청한 Role Id 와 묶어서 Role 를 반환한다.
+     */
     @Override
     public Role getRole(String roleId) {
         role = new Role(roleId, roleId, null, permissions);

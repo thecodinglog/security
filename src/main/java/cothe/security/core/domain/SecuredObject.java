@@ -21,8 +21,8 @@ import javax.persistence.Id;
 @Builder
 public class SecuredObject {
     @Id
-    private String SecuredObjectId;
-    private String SecuredObjectName;
+    private String securedObjectId;
+    private String securedObjectName;
 
     @Enumerated(value = EnumType.STRING)
     private SecuredObjectType securedObjectType;

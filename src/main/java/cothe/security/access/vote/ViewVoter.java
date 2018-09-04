@@ -20,8 +20,8 @@ import java.util.Optional;
  */
 public class ViewVoter implements AccessDecisionVoter<Object> {
 
-    private RoleProvider roleProvider;
-    private RequestedViewMetaExtractor requestedViewMetaExtractor;
+    private final RoleProvider roleProvider;
+    private final RequestedViewMetaExtractor requestedViewMetaExtractor;
 
     public ViewVoter(RoleProvider roleProvider, RequestedViewMetaExtractor requestedViewMetaExtractor) {
         this.roleProvider = roleProvider;

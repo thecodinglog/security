@@ -9,7 +9,7 @@ import java.util.Optional;
  * @author Jeongjin Kim
  * @since 2018. 7. 31.
  */
-
+@Ignore
 public class OptionalTest {
 
     class House{
@@ -36,7 +36,6 @@ public class OptionalTest {
     }
 
     @Test
-    @Ignore("Learning test")
     public void optional(){
         House house = null;
         Optional<House> houseOpt = Optional.ofNullable(house);

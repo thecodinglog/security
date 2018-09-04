@@ -1,21 +1,21 @@
 {
-  "strategy": "allow",
-  "permissions": [
+  "permissionType": "allow",
+  "definitions": [
     {
-      "operations": "search",
+      "operation": "search,book",
       "params": [
         {
           "genre": "dance",
           "since": "1998"
         },
         {
-          "genre": "jazz",
+          "genre": "/j.*/",
           "since": "1920"
         }
       ]
     },
     {
-      "operations": "order",
+      "operation": "order",
       "params": [
         {
           "genre": "dance"

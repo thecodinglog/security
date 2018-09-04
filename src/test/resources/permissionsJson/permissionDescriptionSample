@@ -1,0 +1,13 @@
+{
+  "permissionType": "allow",
+  "definitions": [
+    {
+      "operation": "save",
+      "params": [
+        {
+          "device": "mobile"
+        }
+      ]
+    }
+  ]
+}

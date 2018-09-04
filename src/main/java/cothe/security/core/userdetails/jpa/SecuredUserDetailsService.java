@@ -3,7 +3,6 @@ package cothe.security.core.userdetails.jpa;
 import cothe.security.core.repositories.UserRepository;
 import cothe.security.core.userdetails.SecuredUser;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
  * @since 2018. 8. 13.
  */
 public class SecuredUserDetailsService implements UserDetailsService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public SecuredUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;

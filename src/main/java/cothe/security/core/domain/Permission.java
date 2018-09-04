@@ -5,7 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 /**
  * @author Jeongjin Kim
@@ -25,4 +29,16 @@ public class Permission {
     @JoinColumn(name = "secured_object_id")
     private SecuredObject securedObject;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Permission that = (Permission) o;
+        return Objects.equals(permissionId, that.permissionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(permissionId);
+    }
 }
