@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static cothe.security.access.PermissionType.PERMISSION_TYPE_ALLOW;
+import static cothe.security.access.PermissionType.PERMISSION_TYPE_DENY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -48,12 +49,93 @@ public class DenialFirstServiceVoterTest {
                                 new SecuredObject("object2", "object2", SecuredObjectType.SERVICE))
                 ).collect(Collectors.toSet()));
 
+        mockRepositoryRoleProvider.putRole("role2",
+                Stream.of(
+                        new Permission("permission2-1", "permission2-1", serializedPermissionDescriptionOf("permission2-1"),
+                                new SecuredObject("object2", "object2", SecuredObjectType.SERVICE)),
+                        new Permission("permission3", "permission3", serializedPermissionDescriptionOf("permission3"),
+                                new SecuredObject("object3", "object3", SecuredObjectType.SERVICE))
+                ).collect(Collectors.toSet()));
+
         authentication = SecurityContextHolder.getContext().getAuthentication();
 
         denialFirstServiceVoter = new DenialFirstServiceVoter(
                 mockRepositoryRoleProvider,
                 new MockRequestedServiceMetaExtractor()
         );
+    }
+
+    private String serializedPermissionDescriptionOf(String permissionId) {
+        PermissionDescription permissionDescription = null;
+        switch (permissionId) {
+            case "permission1":
+                permissionDescription = new PermissionDescription(
+                        PERMISSION_TYPE_ALLOW,
+                        Arrays.asList(
+                                new Definition("save",
+                                        Arrays.asList(new HashMap<String, String>() {
+                                            {
+                                                put("device", "mobile");
+                                            }
+                                        }))
+                                , new Definition("/input.*/,persist",
+                                        Arrays.asList(
+                                                new HashMap<String, String>() {
+                                                    {
+                                                        put("device", "pc");
+                                                    }
+                                                }
+                                                , new HashMap<String, String>() {
+                                                    {
+                                                        put("device", "pda");
+                                                    }
+                                                }
+                                        )
+                                )
+                        )
+                );
+                break;
+            case "permission2":
+                permissionDescription = new PermissionDescription(
+                        PERMISSION_TYPE_ALLOW,
+                        Arrays.asList(
+                                new Definition("search",
+                                        Arrays.asList(new HashMap<String, String>() {
+                                            {
+                                                put("os", "mac");
+                                                put("version", "6");
+                                            }
+                                        }))
+                                , new Definition("click",
+                                        Arrays.asList(
+                                                new HashMap<String, String>() {
+                                                    {
+                                                        put("device", "pc");
+                                                    }
+                                                }
+                                        )
+                                )
+                        )
+                );
+                break;
+            case "permission2-1":
+                permissionDescription = new PermissionDescription(
+                        PERMISSION_TYPE_DENY,
+                        Arrays.asList(
+                                new Definition("click",
+                                        Arrays.asList(
+                                                new HashMap<String, String>() {
+                                                    {
+                                                        put("device", "pc");
+                                                    }
+                                                }
+                                        )
+                                )
+                        )
+                );
+                break;
+        }
+        return gson.toJson(permissionDescription);
     }
 
     @Test
@@ -131,6 +213,7 @@ public class DenialFirstServiceVoterTest {
                         }
                 ), null) > 0);
     }
+
     @Test
     public void denyVoting() {
         assertTrue(denialFirstServiceVoter.vote(authentication,
@@ -167,55 +250,17 @@ public class DenialFirstServiceVoterTest {
                             }
                         }
                 ), null) < 0);
+        assertTrue(denialFirstServiceVoter.vote(authentication,
+                new RequestedServiceMeta(
+                        "object2",
+                        "click",
+                        new HashMap<String, String>() {
+                            {
+                                put("device", "pc");
+                            }
+                        }
+                ), null) < 0);
     }
 
-    private String serializedPermissionDescriptionOf(String permissionId) {
-        PermissionDescription permissionDescription = null;
-        switch (permissionId) {
-            case "permission1":
-                permissionDescription = new PermissionDescription(
-                        PERMISSION_TYPE_ALLOW,
-                        Arrays.asList(
-                                new Definition("save",
-                                        Arrays.asList(new HashMap<String, String>() {
-                                            {
-                                                put("device", "mobile");
-                                            }
-                                        }))
-                                , new Definition("/input.*/,persist",
-                                        Arrays.asList(
-                                                new HashMap<String, String>() {
-                                                    {
-                                                        put("device", "pc");
-                                                    }
-                                                }
-                                                , new HashMap<String, String>() {
-                                                    {
-                                                        put("device", "pda");
-                                                    }
-                                                }
-                                        )
-                                )
-                        )
-                );
-                break;
-            case "permission2":
-                permissionDescription = new PermissionDescription(
-                        PERMISSION_TYPE_ALLOW,
-                        Arrays.asList(
-                                new Definition("search",
-                                        Arrays.asList(new HashMap<String, String>() {
-                                            {
-                                                put("os", "mac");
-                                                put("version", "6");
-                                            }
-                                        }))
-                        )
-                );
-                break;
-        }
 
-
-        return gson.toJson(permissionDescription);
-    }
 }

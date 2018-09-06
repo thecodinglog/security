@@ -24,8 +24,8 @@ public class SecuredObjectRepositoryTraversalTest {
     public void setUp() throws Exception {
 
         view1 = SecuredObject.builder()
-                .SecuredObjectId("view1")
-                .SecuredObjectName("view1")
+                .securedObjectId("view1")
+                .securedObjectName("view1")
                 .securedObjectType(SecuredObjectType.VIEW)
                 .build();
 

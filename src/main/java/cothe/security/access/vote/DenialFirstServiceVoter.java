@@ -4,6 +4,7 @@ import cothe.security.access.PermissionDescription;
 import cothe.security.access.RequestedServiceMeta;
 import cothe.security.access.RequestedServiceMetaExtractor;
 import cothe.security.core.domain.providers.RoleProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import static cothe.security.access.PermissionType.PERMISSION_TYPE_DENY;
  * @author Jeongjin Kim
  * @since 2018. 8. 30.
  */
+@Slf4j
 public class DenialFirstServiceVoter extends AbstractServiceVoter {
     public DenialFirstServiceVoter(RoleProvider roleProvider, RequestedServiceMetaExtractor requestedServiceMetaExtractor) {
         super(roleProvider, requestedServiceMetaExtractor);
@@ -41,6 +43,8 @@ public class DenialFirstServiceVoter extends AbstractServiceVoter {
         for (PermissionDescription permissionDescription : permissionDescriptions) {
             if (doesPermissionDescriptionMatchRequestedService(permissionDescription, requestedServiceMeta)) {
                 if (permissionDescription.getPermissionType().equals(PERMISSION_TYPE_DENY)) {
+                    log.debug("{}-{}는 거부되었습니다.",requestedServiceMeta.getServiceName(), requestedServiceMeta.getOperation());
+
                     return ACCESS_DENIED;
                 } else if (permissionDescription.getPermissionType().equals(PERMISSION_TYPE_ALLOW)) {
                     return ACCESS_GRANTED;
