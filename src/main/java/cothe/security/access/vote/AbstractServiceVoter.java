@@ -170,6 +170,7 @@ public abstract class AbstractServiceVoter implements AccessDecisionVoter<Object
 
         for (GrantedAuthority authority : authentication.getAuthorities()) {
             Role role = roleProvider.getRole(authority.getAuthority());
+            
             if (role == null)
                 continue;
 
