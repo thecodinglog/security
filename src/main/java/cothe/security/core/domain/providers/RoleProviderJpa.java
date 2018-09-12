@@ -1,6 +1,7 @@
 package cothe.security.core.domain.providers;
 
 import cothe.security.core.domain.Role;
+import cothe.security.core.exceptions.RoleNotFoundException;
 import cothe.security.core.repositories.RoleRepository;
 
 /**
@@ -16,6 +17,9 @@ public class RoleProviderJpa implements RoleProvider {
 
     @Override
     public Role getRole(String roleId) {
-        return roleRepository.findById(roleId).orElse(null);
+        if (roleId == null) throw new IllegalArgumentException();
+
+        return roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException(
+                String.format("Can't find role id : %s", roleId)));
     }
 }

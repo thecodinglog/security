@@ -35,7 +35,7 @@ public abstract class AbstractServiceVoter implements AccessDecisionVoter<Object
      * AbstractServiceVoter 객체를 생성하기 위해서는 두 오브젝트가 필요합니다. RoleProvider 는 사용자의 권한 도메인 오브젝트를 반환합니다.
      * RequestedServiceMetaExtractor 는 요청한 오브젝트를 기반으로 권한 체크를 할 수 있는 표준화된 클래스(RequestedServiceMeta)로 반환합니다.
      *
-     * @param roleProvider roleId를 입력받아 Role 도메인 객체를 생성하여 리턴하는 인터페이스
+     * @param roleProvider                  roleId를 입력받아 Role 도메인 객체를 생성하여 리턴하는 인터페이스
      * @param requestedServiceMetaExtractor 클라이언트가 요청한 정보를 RequestedServiceMeta 오브젝트를 생성하여 반환하는 인터페이스
      */
     @SuppressWarnings("WeakerAccess")
@@ -158,19 +158,22 @@ public abstract class AbstractServiceVoter implements AccessDecisionVoter<Object
         return permissionExpressionMatcher(permissionParamEntry, requestedValue);
     }
 
-    //todo: parent role 에서 permission 가져오는 정책은?
     /**
      * 사용자는 여러 Role 을 가질 수 있기 때문에 Role 이 가지고 있는 퍼미션이 중복될 수 있다.
      * extractPermissions 는 롤들이 가지고 있는 퍼미션을 모두 가져와서 중복되지 않는 Set 타입으로 반환한다.
      */
     @SuppressWarnings("WeakerAccess")
     protected Set<Permission> extractPermissions(Authentication authentication, RequestedServiceMeta requestedServiceMeta) {
-
         Set<Permission> permissions = new HashSet<>();
+        Set<Role> roles = new HashSet<>();
 
         for (GrantedAuthority authority : authentication.getAuthorities()) {
-            Role role = roleProvider.getRole(authority.getAuthority());
-            
+            roles.add(roleProvider.getRole(authority.getAuthority()));
+        }
+
+        roles = travelRoleHierarchy(roles);
+
+        for (Role role : roles) {
             if (role == null)
                 continue;
 
@@ -179,13 +182,31 @@ public abstract class AbstractServiceVoter implements AccessDecisionVoter<Object
                             && perm.getSecuredObject().getSecuredObjectId().equals(requestedServiceMeta.getServiceName())
             )).ifPresent(permissions::addAll);
         }
+
         return permissions;
+    }
+
+    private Set<Role> travelRoleHierarchy(Set<Role> roles) {
+        if (roles.size() == 0) return roles;
+
+        Set<Role> tempRoles = new HashSet<>();
+
+        for (Role role : roles) {
+            if (role == null || role.getParentRole() == null || roles.contains(role.getParentRole())) {
+            } else {
+                tempRoles.add(role.getParentRole());
+            }
+        }
+
+        roles.addAll(travelRoleHierarchy(tempRoles));
+
+        return roles;
     }
 
     /**
      * permission String 은 <kbd>,</kbd> 로 구분된 리스트일 수 있습니다.
      * 따라서 <kbd>,</kbd> 로 개별 item 으로 분리하여 순회하고 매치되면 즉시 true 를 반환합니다.
-     *
+     * <p>
      * 개별 표현식 item 이 <kbd>/</kbd> 로 시작하고 <kbd>/</kbd> 로 끝나면 내부 스트링을 정규표현식으로 인식합니다.
      */
     private boolean permissionExpressionMatcher(String permissionExpression, String targetValue) {

@@ -24,4 +24,7 @@ public class MockRepositoryRoleProvider implements RoleProvider {
         roles.put(roleId, new Role(roleId, roleId, null, permissions));
     }
 
+    public void putRole(String roleId, Set<Permission> permissions, Role parentRole){
+        roles.put(roleId, new Role(roleId, roleId, parentRole, permissions));
+    }
 }
