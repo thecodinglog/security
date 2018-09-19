@@ -1,23 +1,30 @@
 spring:
   profiles:
-    active: local
+    active: localBuiltInDb
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+logging:
+  level.org.springframework.jdbc.core.JdbcTemplate: debug
 
 # local 환경
 ---
 spring:
-  profiles: local
+  profiles: localMysqlDb
   datasource:
     url: jdbc:mysql://localhost:3306/security_db
     username: secuser
     password: sec1234
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
-logging:
-  level.org.springframework.jdbc.core.JdbcTemplate: debug
+---
+spring:
+  profiles: localBuiltInDb
+  h2:
+    console:
+      enabled: true
